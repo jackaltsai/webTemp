@@ -1,6 +1,8 @@
-if (process.env.NODE_ENV !== "production") {
-    require("dotenv").config()
-}
+// if (process.env.NODE_ENV !== "production") {
+//     require("dotenv").config()
+// }
+
+const cfg = require('./config');
 
 const express = require("express");
 const multer = require("multer");
@@ -24,11 +26,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.use(express.urlencoded({extended: true}));
 app.use(flash());
+
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: cfg.secured_key,
     resave: false, // We wont resave the session variable if nothing is changed
     saveUninitialized: false
 }))
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
